@@ -1,7 +1,5 @@
 package com.tasktracker.userservice.ServiceImpl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,25 +32,18 @@ public class AuthUserService {
 			newAuthUser.setPassword(encoded);
 			newAuthUser.setEmail(user.getEmail());
 			newAuthUser.setUserName(user.getUsername());
-			List<Role> roleList = new ArrayList<Role>();
-			List<String> checkRole = new ArrayList<String>();
-			for (Role role : roleRepository.findAll()) {
-				checkRole.add(role.getRole());
+			Role role = user.getRole();
+			Role existingRole = roleRepository.findByRoleName(role.getRoleName());
+			if (existingRole == null) {
+				role = roleRepository.save(role);
+			} else {
+				role = existingRole; // Use existing role if found
 			}
-			for (Role role : user.getRole()) {
-				if (checkRole.contains(role.getRole().toUpperCase())) {
-					roleList.add(role);
-				} else {
-					roleList.add(role);
-					roleRepository.save(role);
-				}
-			}
-			newAuthUser.setRole(roleList);
-			log.info("roleList : {}", roleList);
+
+			newAuthUser.setRole(role);
 			return repository.save(newAuthUser);
 		}
 		return authuser.get();
 	}
-
 
 }
