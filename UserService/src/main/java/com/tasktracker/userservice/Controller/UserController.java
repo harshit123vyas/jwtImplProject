@@ -19,24 +19,24 @@ public interface UserController {
     @PostMapping("/user/createUser")
     public ResponseEntity<UserResponse<User>> createUser(@RequestBody User user);
 
-//    @GetMapping("/getUsers")
-//    public ResponseEntity<UserResponse<List<User>>> getAllUsers(@RequestParam(defaultValue = "5", required = false) Integer pageSize,
-//            @RequestParam(defaultValue = "0", required = false) Integer page);
+    @GetMapping("/getUsers")
+    public ResponseEntity<UserResponse<List<User>>> getAllUsers(@RequestParam(defaultValue = "5", required = false) Integer pageSize,
+            @RequestParam(defaultValue = "0", required = false) Integer page);
 
     @GetMapping("/user/getUsersById")
     public ResponseEntity<UserResponse<List<User>>> getUserById(@RequestParam Long id);
-//
-//    @GetMapping("/getUserByDate")
-//    public ResponseEntity<UserResponse<List<User>>> getUsersBetweenDates(@RequestParam Date startDate, @RequestParam Date endDate);
-//
-//    @PostMapping("/updateUser")
-//    public ResponseEntity<UserResponse<List<User>>> updateUser(@RequestParam Long id, @RequestBody User updateUser) throws Exception;
-//
-//    @PostMapping("/deleteUser")
-//    public ResponseEntity<String> deleteUser(@RequestParam Long id);
-//
-//    @PostMapping("/upload")
-//    public ResponseEntity<User> fileUpload(@RequestParam("image") MultipartFile image);
+
+    @GetMapping("/getUserByDate")
+    public ResponseEntity<UserResponse<List<User>>> getUsersBetweenDates(@RequestParam Date startDate, @RequestParam Date endDate);
+
+    @PostMapping("/updateUser")
+    public ResponseEntity<UserResponse<List<User>>> updateUser(@RequestParam Long id, @RequestBody User updateUser) throws Exception;
+
+    @PostMapping("/deleteUser")
+    public ResponseEntity<String> deleteUser(@RequestParam Long id);
+
+    @PostMapping("/upload")
+    public ResponseEntity<User> fileUpload(@RequestParam("image") MultipartFile image);
 
     @GetMapping("/user/login")
     public ResponseEntity<String> sendEmail(@RequestParam("email") String email, @RequestParam("password") String password);

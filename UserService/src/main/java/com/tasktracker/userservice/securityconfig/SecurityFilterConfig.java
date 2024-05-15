@@ -19,20 +19,25 @@ public class SecurityFilterConfig {
 	private JwtAuthenticationEntryPoint point;
 	@Autowired
 	private JwtAuthenticationFilter filter;
+	String[] admin = { "/user/createUser", "/user/getUsersById", "/user/getUserByDate", "/user/updateUser",
+			"/user/deleteUser", "/user/upload", "/user/login", "/user/verifyOtp" };
+
+	String[] user = { "/user/createUser", "/user/getUsersById", "/user/updateUser", "/user/login", "/user/verifyOtp" };
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
 		return security.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/authenticate").permitAll()
 						.requestMatchers("/register").permitAll()
-						.requestMatchers("/user/**").hasAuthority("USER")
-						.requestMatchers("/manager/**").hasAuthority("MANAGER")
-						.requestMatchers("/hr/**").hasAuthority("HR")
-						.requestMatchers("/admin/**").hasAuthority("ADMIN").anyRequest().authenticated())
+						.requestMatchers(admin).hasAuthority("ADMIN")
+						.requestMatchers(user).hasAuthority("USER")
+						.requestMatchers("/user/getUsersById").hasAuthority("MANAGER")
+						.requestMatchers("/user/getUserByDate").hasAuthority("HR")		
+						.anyRequest()
+						.authenticated())
 				.exceptionHandling(ex -> ex.authenticationEntryPoint(point))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).build();
 	}
-	  
 
 }
