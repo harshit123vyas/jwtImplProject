@@ -16,14 +16,14 @@ import com.tasktracker.userservice.response.UserResponse;
 
 public interface UserController {
 
-    @PostMapping("/user/createUser")
+    @PostMapping("/createUser")
     public ResponseEntity<UserResponse<User>> createUser(@RequestBody User user);
 
     @GetMapping("/getUsers")
     public ResponseEntity<UserResponse<List<User>>> getAllUsers(@RequestParam(defaultValue = "5", required = false) Integer pageSize,
             @RequestParam(defaultValue = "0", required = false) Integer page);
 
-    @GetMapping("/user/getUsersById")
+    @GetMapping("/getUsersById")
     public ResponseEntity<UserResponse<List<User>>> getUserById(@RequestParam Long id);
 
     @GetMapping("/getUserByDate")
@@ -38,9 +38,9 @@ public interface UserController {
     @PostMapping("/upload")
     public ResponseEntity<User> fileUpload(@RequestParam("image") MultipartFile image);
 
-    @GetMapping("/user/login")
+    @GetMapping("/login")
     public ResponseEntity<String> sendEmail(@RequestParam("email") String email, @RequestParam("password") String password);
 
-    @GetMapping("/user/verifyOtp")
+    @GetMapping("/verifyOtp")
     public ResponseEntity<String> verifyOtp(@RequestParam("email") String email, @RequestParam("otp") Long otp);
 }
